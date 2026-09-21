@@ -1,68 +1,131 @@
-* {
-    box-sizing: border-box;
-}
+const customerList =
+    document.getElementById("customerList");
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-}
+const loadCustomers =
+    document.getElementById("loadCustomers");
 
-header {
-    background: #071a33;
-    color: white;
-    text-align: center;
-    padding: 30px;
-}
+const customerForm =
+    document.getElementById("customerForm");
 
-header h1 {
-    margin: 0;
-}
+const message =
+    document.getElementById("message");
 
-main {
-    max-width: 900px;
-    margin: auto;
-    padding: 30px 20px;
-}
 
-.panel {
-    background: white;
-    padding: 25px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-}
+// GET REQUEST
+loadCustomers.addEventListener("click", function () {
 
-input {
-    width: 100%;
-    padding: 13px;
-    margin-bottom: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-}
+    fetch("https://jsonplaceholder.typicode.com/users")
 
-button {
-    padding: 13px 20px;
-    border: none;
-    border-radius: 6px;
-    background: #25d366;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
+        .then(function (response) {
 
-button:hover {
-    background: #1db954;
-}
+            return response.json();
 
-.customer {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 8px;
-}
+        })
 
-#message {
-    font-weight: bold;
-}
+        .then(function (data) {
+
+            customerList.innerHTML = "";
+
+            data.forEach(function (customer) {
+
+                customerList.innerHTML += `
+
+                    <div class="customer">
+
+                        <h3>${customer.name}</h3>
+
+                        <p>
+                            Email: ${customer.email}
+                        </p>
+
+                        <p>
+                            Phone: ${customer.phone}
+                        </p>
+
+                    </div>
+
+                `;
+
+            });
+
+        })
+
+        .catch(function (error) {
+
+            console.log(error);
+
+            customerList.innerHTML =
+                "<p>Unable to load customers.</p>";
+
+        });
+
+});
+
+
+// POST REQUEST
+customerForm.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("customerName").value;
+
+    const service =
+        document.getElementById("customerService").value;
+
+    const amount =
+        document.getElementById("customerAmount").value;
+
+
+    const customer = {
+
+        name: name,
+
+        service: service,
+
+        amount: amount
+
+    };
+
+
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify(customer)
+
+    })
+
+    .then(function (response) {
+
+        return response.json();
+
+    })
+
+    .then(function (data) {
+
+        console.log(data);
+
+        message.textContent =
+            "Customer sent successfully!";
+
+        customerForm.reset();
+
+    })
+
+    .catch(function (error) {
+
+        console.log(error);
+
+        message.textContent =
+            "Something went wrong.";
+
+    });
+
+});
