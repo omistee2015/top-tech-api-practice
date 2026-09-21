@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Tech API Practice</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+    <header>
+        <h1>TOP TECH</h1>
+        <p>API Practice</p>
+    </header>
+
+    <main>
+
+        <section class="panel">
+            <h2>Customer API</h2>
+
+            <button id="loadCustomers">
+                Load Customers
+            </button>
+
+            <div id="customerList"></div>
+        </section>
+
+        <section class="panel">
+
+            <h2>Add Customer</h2>
+
+            <form id="customerForm">
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Customer Name"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="customerService"
+                    placeholder="Service"
+                    required
+                >
+
+                <input
+                    type="number"
+                    id="customerAmount"
+                    placeholder="Amount"
+                    required
+                >
+
+                <button type="submit">
+                    Add Customer
+                </button>
+
+            </form>
+
+            <p id="message"></p>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
